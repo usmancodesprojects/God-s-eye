@@ -164,7 +164,7 @@ para("Qiskit Fall Fest 2026 Hackathon · The Quantum Optimization Challenge · "
      "Domain 6: Energy & Smart Infrastructure", size=10, color=MUTED, after=2)
 para("Team: Huzaifa (quantum formulation and solver) · Ahmad (full-stack web application) · "
      "third team member (repository, research and documentation)", size=10, color=MUTED, after=2)
-todo("GitHub repository: <paste the public repository URL here before submitting>")
+para("https://github.com/usmancodesprojects/God-s-eye", "GitHub repository: ", size=10, after=2)
 todo("3-minute video (anyone with the link): <paste the Google Drive link here before submitting>")
 
 doc.add_heading("Executive summary", level=1)

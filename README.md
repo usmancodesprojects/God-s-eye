@@ -5,7 +5,7 @@
 
 **Qiskit Fall Fest 2026 Hackathon · Domain 6: Energy & Smart Infrastructure**
 
-Where should a city mount a limited number of CCTV cameras, which way should each one point and which lens should it use, so that every street intersection in a sector is covered at the lowest hardware and lifetime energy cost?
+Where should a city mount a limited number of CCTV cameras, which way should each one point and which lens should it use, so that every street in a district is in view at the lowest hardware and lifetime energy cost?
 We build the problem from real OpenStreetMap geometry of Midtown Manhattan (Bryant Park) and solve it with **QAOA in Qiskit**. We compare it against an exact brute-force solution, an independent MILP and a greedy heuristic.
 
 ## Full street-area coverage (what the web app shows)
