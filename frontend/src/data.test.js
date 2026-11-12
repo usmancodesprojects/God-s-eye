@@ -19,7 +19,7 @@ test('candidate lookup works with sparse IDs and shuffled candidate order',()=>{
   const d=result(8);d.candidates.reverse();
   d.candidates.forEach(c=>c.id+=100);
   d.solutions.qaoa.selected=d.solutions.qaoa.selected.map(id=>id+100);
-  assert.deepEqual(selectedCameras(d,'qaoa').map(c=>c.id),[101,104,106]);
+  assert.deepEqual(selectedCameras(d,'qaoa').map(c=>c.id),d.solutions.qaoa.selected);assert.ok(d.solutions.qaoa.selected.every(id=>id>=100));
 });
 test('polygon closure copies data without mutating original',()=>{
   const p=[[0,0],[1,0],[1,1]];assert.equal(closeRing(p).length,4);assert.equal(p.length,3);

@@ -5,8 +5,10 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const win=process.platform==='win32';
-const venv=path.join(root,'backend','.venv',win?'Scripts/python.exe':'bin/python');
-const python=process.env.PYTHON_EXECUTABLE || (existsSync(venv)?venv:win?'python':'python3');
+const bin=win?'Scripts/python.exe':'bin/python';
+// Prefer the root .venv (has Qiskit for live solving), then a UI-only backend/.venv.
+const venvs=[path.join(root,'.venv',bin),path.join(root,'backend','.venv',bin)];
+const python=process.env.PYTHON_EXECUTABLE || venvs.find(v=>existsSync(v)) || (win?'python':'python3');
 const envFile=path.join(root,'backend','.env');
 const children=[];
 let stopping=false;

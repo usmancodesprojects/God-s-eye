@@ -11,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
 
 from .models import Instance, OptimizationResult, OptimizeRequest
-from .solver_bridge import get_solver
+from .solver_bridge import SolverRequestError, get_solver
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / 'data' / 'results'
@@ -68,6 +68,9 @@ def optimize(request: OptimizeRequest):
             raise TypeError('Solver returned an awaitable; use a synchronous adapter')
         # Preserve optional fields but reject invalid core results before the UI receives them.
         return OptimizationResult.model_validate(result)
+    except SolverRequestError as exc:
+        logger.warning('Solver rejected request: %s', exc)
+        raise HTTPException(422, str(exc)) from None
     except (ValidationError, TypeError, ValueError):
         logger.exception('Solver returned an invalid result')
         raise HTTPException(502, 'Solver failed or returned an invalid result. See server logs.') from None

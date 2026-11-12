@@ -15,7 +15,7 @@ export default function CityMap({ data, method, focused, onFocus, bbox, captureR
   useEffect(() => {
     let map;
     try {
-      map = new maplibregl.Map({ container: container.current, style: 'https://tiles.openfreemap.org/styles/liberty', center: data.sector.center, zoom: 16.5, pitch: 60, bearing: -28, maxPitch: 80, attributionControl: true });
+      map = new maplibregl.Map({ container: container.current, style: 'https://tiles.openfreemap.org/styles/positron', center: data.sector.center, zoom: 16.5, pitch: 60, bearing: -28, maxPitch: 80, attributionControl: true });
     } catch { setError('WebGL is unavailable. Showing a 2D data view; enable browser hardware acceleration for the 3D city map.'); setFallback(true); return; }
     mapRef.current = map;
     map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-right');
@@ -28,17 +28,17 @@ export default function CityMap({ data, method, focused, onFocus, bbox, captureR
       if (base) {
         // Building source is discovered from the provider's style, not assumed.
         map.addLayer({ id: 'city-buildings', source: base.source, 'source-layer': 'building', type: 'fill-extrusion', minzoom: 14,
-          paint: { 'fill-extrusion-color': '#c8d1d7', 'fill-extrusion-height': ['max', 0, ['to-number', ['get', 'render_height'], 0]], 'fill-extrusion-base': ['max', 0, ['to-number', ['get', 'render_min_height'], 0]], 'fill-extrusion-opacity': 0.72 } });
+          paint: { 'fill-extrusion-color': '#e3e6df', 'fill-extrusion-height': ['max', 0, ['to-number', ['get', 'render_height'], 0]], 'fill-extrusion-base': ['max', 0, ['to-number', ['get', 'render_min_height'], 0]], 'fill-extrusion-opacity': 0.88 } });
       } else setError('The basemap has no building source layer; 3D buildings are unavailable.');
       for (const id of ['sector', 'request', 'candidates', 'wedges', 'zones']) map.addSource(id, { type: 'geojson', data: fc([]) });
-      map.addLayer({ id: 'sector-line', type: 'line', source: 'sector', paint: { 'line-color': '#55627a', 'line-width': 1.5, 'line-dasharray': [3, 3] } });
+      map.addLayer({ id: 'sector-line', type: 'line', source: 'sector', paint: { 'line-color': '#5f6b5c', 'line-width': 1.6, 'line-dasharray': [3, 3] } });
       map.addLayer({ id: 'request-line', type: 'line', source: 'request', paint: { 'line-color': '#9255d7', 'line-width': 2, 'line-dasharray': [2, 2] } });
-      map.addLayer({ id: 'fov-fill', type: 'fill', source: 'wedges', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.22 } });
-      map.addLayer({ id: 'fov-line', type: 'line', source: 'wedges', paint: { 'line-color': ['get', 'color'], 'line-width': 1.3, 'line-opacity': 0.85 } });
-      map.addLayer({ id: 'candidate-dots', type: 'circle', source: 'candidates', paint: { 'circle-radius': 3.5, 'circle-color': '#7a8490', 'circle-stroke-color': '#fff', 'circle-stroke-width': 1 } });
+      map.addLayer({ id: 'fov-fill', type: 'fill', source: 'wedges', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.26 } });
+      map.addLayer({ id: 'fov-line', type: 'line', source: 'wedges', paint: { 'line-color': ['get', 'color'], 'line-width': 1.4, 'line-opacity': 0.9 } });
+      map.addLayer({ id: 'candidate-dots', type: 'circle', source: 'candidates', paint: { 'circle-radius': 2.5, 'circle-color': '#7a8490', 'circle-stroke-color': '#fff', 'circle-stroke-width': 1 } });
       map.addLayer({ id: 'zone-circles', type: 'circle', source: 'zones', paint: {
-        'circle-radius': ['case', ['get', 'priority'], 10, 6], 'circle-color': ['case', ['get', 'isCovered'], '#23865d', '#e05252'],
-        'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', ['get', 'priority'], 3, 2], 'circle-opacity': 0.95,
+        'circle-radius': ['case', ['get', 'priority'], 7, 4], 'circle-color': ['case', ['get', 'isCovered'], '#3f8f5a', '#d64545'],
+        'circle-stroke-color': '#fff', 'circle-stroke-width': ['case', ['get', 'priority'], 2, 1], 'circle-opacity': 0.95,
       } });
       map.on('click', 'zone-circles', e => {
         const p = e.features[0].properties;
@@ -59,7 +59,8 @@ export default function CityMap({ data, method, focused, onFocus, bbox, captureR
     const map = mapRef.current, selected = selectedCameras(data, method);
     map.getSource('sector').setData(bboxFeature(data.sector.bbox));
     map.getSource('request').setData(JSON.stringify(bbox) === JSON.stringify(data.sector.bbox) ? fc([]) : bboxFeature(bbox));
-    map.getSource('candidates').setData(fc(data.candidates.map(c => feature('Point', [c.lon,c.lat], { id: c.id }))));
+    const mounts = new Map(); for (const c of data.candidates) if (!mounts.has(c.mount_id)) mounts.set(c.mount_id, c);   // one dot per mount
+    map.getSource('candidates').setData(fc([...mounts.values()].map(c => feature('Point', [c.lon,c.lat], { id: c.id }))));
     map.getSource('zones').setData(fc(coveredZones(data, method).map(z => feature('Point', [z.lon,z.lat], z))));
     map.getSource('wedges').setData(fc(selected.map(c => feature('Polygon', [closeRing(c.fov_polygon)], { id: c.id, color: c.color }))));
     markers.current.forEach(m => m.remove());
@@ -90,7 +91,7 @@ export default function CityMap({ data, method, focused, onFocus, bbox, captureR
     {fallback&&<DataMap data={data} method={method} focused={focused} onFocus={onFocus} bbox={bbox}/>}
     {!ready && !error && <div className="map-loading"><span className="spinner"/> Loading Manhattan…</div>}
     {error && <div role="alert" className="map-error">{error}</div>}
-    <div className="map-heading"><span className="live-dot"/><strong>BRYANT PARK SECTOR</strong><span>40.7536° N / 73.9840° W</span></div>
+    <div className="map-heading"><span className="live-dot"/><strong>{data.sector.name}</strong><span>{data.sector.center[1].toFixed(4)}° N / {Math.abs(data.sector.center[0]).toFixed(4)}° W</span></div>
     <div className="map-tools"><button disabled={!ready} onClick={reset}><LocateFixed size={15}/> Reset view</button><button disabled={!ready} aria-pressed={buildings} onClick={() => setBuildings(!buildings)}><Layers3 size={15}/> Buildings {buildings ? 'on' : 'off'}</button><button disabled={!ready} aria-pressed={cones} onClick={() => setCones(!cones)}>3D rays {cones ? 'on' : 'off'}</button><button aria-label="Toggle fullscreen map" onClick={() => { const el=container.current.parentElement; if(document.fullscreenElement) document.exitFullscreen?.(); else el.requestFullscreen?.(); }}><Maximize2 size={15}/></button></div>
     <div className="map-legend"><span><i className="dot covered"/> Covered zone</span><span><i className="dot uncovered"/> Uncovered</span><span><i className="dot priority"/> Priority</span><span><i className="dot candidate"/> Candidate</span><span><i className="legend-wedge"/> Field of view</span></div>
     <div className="map-caption">{fallback?'2D fallback · Click a camera to inspect':'Drag to explore · Right-drag to tilt & rotate · Click a camera to inspect'}</div>

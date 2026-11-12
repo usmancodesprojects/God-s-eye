@@ -11,6 +11,11 @@ from functools import lru_cache
 from typing import Callable
 
 
+class SolverRequestError(ValueError):
+    """Raised by the adapter when the *request* is unsupported (region too small/large,
+    p too high). Its message is user-facing and is returned as HTTP 422."""
+
+
 @lru_cache(maxsize=1)
 def get_solver() -> Callable | None:
     path = os.getenv('SOLVER_CALLABLE', '').strip()

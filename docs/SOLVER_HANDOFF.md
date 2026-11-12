@@ -1,3 +1,5 @@
+> **Status (integrated):** the adapter is connected via `backend/app/solver_adapter.py` (`SOLVER_CALLABLE=app.solver_adapter:optimize`). It solves 100% street-area coverage with decomposed QAOA (`src/solve_area.py`). This document is kept as the original integration contract.
+
 # Huzaifa → Ahmad integration handoff
 
 The frontend and FastAPI server are complete. This document defines the only remaining connection to Huzaifa's solver. Do not rewrite the UI or duplicate quantum/classical algorithms in the API layer.

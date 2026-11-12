@@ -1,0 +1,182 @@
+[
+ {
+  "B": 0.3,
+  "method": "qaoa",
+  "cost": 0.0,
+  "num_cameras": 0,
+  "weighted_coverage_pct": 0.0,
+  "coverage_pct": 0.0,
+  "energy": 4.5,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 0.3,
+  "method": "exact",
+  "cost": 0.0,
+  "num_cameras": 0,
+  "weighted_coverage_pct": 0.0,
+  "coverage_pct": 0.0,
+  "energy": 4.5,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 0.3,
+  "method": "greedy",
+  "cost": 0.0,
+  "num_cameras": 0,
+  "weighted_coverage_pct": 0.0,
+  "coverage_pct": 0.0,
+  "energy": 4.5,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 0.5,
+  "method": "qaoa",
+  "cost": 5.7,
+  "num_cameras": 3,
+  "weighted_coverage_pct": 86.7,
+  "coverage_pct": 85.7,
+  "energy": 6.7,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 0.5,
+  "method": "exact",
+  "cost": 5.7,
+  "num_cameras": 3,
+  "weighted_coverage_pct": 86.7,
+  "coverage_pct": 85.7,
+  "energy": 6.7,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 0.5,
+  "method": "greedy",
+  "cost": 3.8,
+  "num_cameras": 2,
+  "weighted_coverage_pct": 60.0,
+  "coverage_pct": 57.1,
+  "energy": 6.8,
+  "approx_ratio": 0.9853
+ },
+ {
+  "B": 0.75,
+  "method": "qaoa",
+  "cost": 7.0,
+  "num_cameras": 4,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 7.0,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 0.75,
+  "method": "exact",
+  "cost": 7.0,
+  "num_cameras": 4,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 7.0,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 0.75,
+  "method": "greedy",
+  "cost": 6.4,
+  "num_cameras": 4,
+  "weighted_coverage_pct": 86.7,
+  "coverage_pct": 85.7,
+  "energy": 7.9,
+  "approx_ratio": 0.8861
+ },
+ {
+  "B": 1.0,
+  "method": "qaoa",
+  "cost": 7.0,
+  "num_cameras": 4,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 7.0,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 1.0,
+  "method": "exact",
+  "cost": 7.0,
+  "num_cameras": 4,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 7.0,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 1.0,
+  "method": "greedy",
+  "cost": 8.3,
+  "num_cameras": 5,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 8.3,
+  "approx_ratio": 0.8434
+ },
+ {
+  "B": 1.5,
+  "method": "qaoa",
+  "cost": 7.0,
+  "num_cameras": 4,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 7.0,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 1.5,
+  "method": "exact",
+  "cost": 7.0,
+  "num_cameras": 4,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 7.0,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 1.5,
+  "method": "greedy",
+  "cost": 8.3,
+  "num_cameras": 5,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 8.3,
+  "approx_ratio": 0.8434
+ },
+ {
+  "B": 2.0,
+  "method": "qaoa",
+  "cost": 7.0,
+  "num_cameras": 4,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 7.0,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 2.0,
+  "method": "exact",
+  "cost": 7.0,
+  "num_cameras": 4,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 7.0,
+  "approx_ratio": 1.0
+ },
+ {
+  "B": 2.0,
+  "method": "greedy",
+  "cost": 8.3,
+  "num_cameras": 5,
+  "weighted_coverage_pct": 100.0,
+  "coverage_pct": 100.0,
+  "energy": 8.3,
+  "approx_ratio": 0.8434
+ }
+]

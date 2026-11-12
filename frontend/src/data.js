@@ -1,6 +1,9 @@
 export const METHODS = ['qaoa', 'exact', 'greedy'];
-export const COLORS = { qaoa: '#b5f06b', exact: '#76baff', greedy: '#ecbb70' };
-export const PALETTE = ['#91d84f', '#2aafa1', '#9180e5', '#ebaa4f', '#3a9de1', '#d779ad', '#c7bb48'];
+export const COLORS = { qaoa: '#5f8f57', exact: '#3b6fb6', greedy: '#c98a2e' };
+// Distinct hues for the solver's camera colouring (adjacent cameras never share a colour).
+// The first four avoid the green/red used for covered/uncovered street points.
+export const PALETTE = ['#3b6fb6', '#e08a2c', '#8e5cc4', '#2a9d9a', '#c2507a', '#7a9a3a', '#5b6b7a', '#b8860b', '#4f9fd9', '#a0522d'];
+export const AREA_LABELS = { sector_8: 'Area S · 6th Ave & 42nd St', sector_12: 'Area M · Bryant Park west', sector_16: 'Area L · Bryant Park sector' };
 export const fmt = (n, digits = 2) => Number.isFinite(n) ? n.toLocaleString('en-US', { maximumFractionDigits: digits }) : '—';
 export const probability = n => Number.isFinite(n) ? `${(n * 100).toFixed(4).replace(/0+$/, '').replace(/\.$/, '')}%` : '—';
 export function validateResult(d) {
@@ -31,7 +34,8 @@ export function validateResult(d) {
 }
 export function selectedCameras(d, method) {
   const byId = new Map(d.candidates.map(c => [c.id, c]));
-  return d.solutions[method].selected.map((id, i) => ({ ...byId.get(id), color: PALETTE[i % PALETTE.length] }));
+  const colors = d.solutions[method].colors || {};   // solver-assigned graph colouring
+  return d.solutions[method].selected.map((id, i) => ({ ...byId.get(id), color: PALETTE[(colors[id] ?? i) % PALETTE.length] }));
 }
 export function coveredZones(d, method) {
   const selected = new Set(d.solutions[method].selected);
